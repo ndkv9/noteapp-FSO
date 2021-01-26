@@ -29,7 +29,7 @@ const App = props => {
 		showAll ? setBtnText('show all') : setBtnText('show important')
 	}
 
-	const notesToShow = showAll ? notes : notes.filter(n => n.important === true)
+	const notesToShow = showAll ? notes : notes.filter(n => n.important)
 
 	return (
 		<div>
