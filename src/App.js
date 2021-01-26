@@ -4,6 +4,8 @@ import Note from './components/Note'
 const App = props => {
 	const [notes, setNotes] = useState(props.notes)
 	const [newNote, setNewNote] = useState('')
+	const [showAll, setShowAll] = useState(true)
+	const [btnText, setBtnText] = useState('show important')
 
 	const addNote = e => {
 		e.preventDefault()
@@ -22,14 +24,22 @@ const App = props => {
 		setNewNote(e.target.value)
 	}
 
+	const handleImportance = () => {
+		setShowAll(!showAll)
+		showAll ? setBtnText('show all') : setBtnText('show important')
+	}
+
+	const notesToShow = showAll ? notes : notes.filter(n => n.important === true)
+
 	return (
 		<div>
 			<h1>Notes</h1>
 			<ul>
-				{notes.map(note => (
+				{notesToShow.map(note => (
 					<Note key={note.id} content={note.content} />
 				))}
 			</ul>
+			<button onClick={handleImportance}>{btnText}</button>
 			<form onSubmit={addNote}>
 				<input value={newNote} onChange={handleNoteChange} />
 				<button type='submit'>save</button>
