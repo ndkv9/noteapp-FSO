@@ -9,7 +9,7 @@ const App = () => {
 	const [btnText, setBtnText] = useState('show important')
 
 	useEffect(() => {
-		noteService.getAll().then(res => setNotes(res.data))
+		noteService.getAll().then(initialNotes => setNotes(initialNotes))
 	}, [])
 
 	const addNote = e => {
@@ -20,8 +20,8 @@ const App = () => {
 			important: Math.random() < 0.5,
 		}
 
-		noteService.create(noteObj).then(res => {
-			setNotes(notes.concat(res.data))
+		noteService.create(noteObj).then(returnedNote => {
+			setNotes(notes.concat(returnedNote))
 			setNewNote('')
 		})
 	}
@@ -41,8 +41,8 @@ const App = () => {
 		const note = notes.find(n => n.id === id)
 		const changedNote = { ...note, important: !note.important }
 
-		noteService.update(id, changedNote).then(res => {
-			setNotes(notes.map(note => (note.id !== id ? note : res.data)))
+		noteService.update(id, changedNote).then(returnedNote => {
+			setNotes(notes.map(note => (note.id !== id ? note : returnedNote)))
 		})
 	}
 
