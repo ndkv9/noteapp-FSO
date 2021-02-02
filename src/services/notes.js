@@ -14,7 +14,7 @@ const update = (id, newObject) => {
 }
 
 export default {
-	getAll: getAll,
-	create: create,
-	update: update,
+	getAll,
+	create,
+	update,
 }

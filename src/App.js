@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Note from './components/Note'
-import axios from 'axios'
+import noteService from './services/notes'
 
 const App = () => {
 	const [notes, setNotes] = useState([])
@@ -9,7 +9,7 @@ const App = () => {
 	const [btnText, setBtnText] = useState('show important')
 
 	useEffect(() => {
-		axios.get('http://localhost:5000/notes').then(res => setNotes(res.data))
+		noteService.getAll().then(res => setNotes(res.data))
 	}, [])
 
 	const addNote = e => {
@@ -20,7 +20,7 @@ const App = () => {
 			important: Math.random() < 0.5,
 		}
 
-		axios.post('http://localhost:5000/notes', noteObj).then(res => {
+		noteService.create(noteObj).then(res => {
 			setNotes(notes.concat(res.data))
 			setNewNote('')
 		})
@@ -38,11 +38,10 @@ const App = () => {
 	const notesToShow = showAll ? notes : notes.filter(n => n.important)
 
 	const toggleImportant = id => {
-		const url = `http://localhost:5000/notes/${id}`
 		const note = notes.find(n => n.id === id)
 		const changedNote = { ...note, important: !note.important }
 
-		axios.put(url, changedNote).then(res => {
+		noteService.update(id, changedNote).then(res => {
 			setNotes(notes.map(note => (note.id !== id ? note : res.data)))
 		})
 	}
