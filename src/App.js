@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Note from './components/Note'
 import Noti from './components/Noti'
+import Footer from './components/Footer'
 import noteService from './services/notes'
 
 const App = () => {
@@ -49,7 +50,9 @@ const App = () => {
 				setNotes(notes.map(note => (note.id !== id ? note : returnedNote)))
 			})
 			.catch(error => {
-				setErrorMessage(error.message)
+				setErrorMessage(
+					`Note '${note.content}' was already removed from server`
+				)
 				setTimeout(() => {
 					setErrorMessage(null)
 				}, 3000)
@@ -75,6 +78,7 @@ const App = () => {
 				<input value={newNote} onChange={handleNoteChange} />
 				<button type='submit'>save</button>
 			</form>
+			<Footer />
 		</div>
 	)
 }
