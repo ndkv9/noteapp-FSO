@@ -11,6 +11,10 @@ body {
 	margin-left: 50px;
 }
 
+input {
+	margin-left: 10px;
+}
+
 h1 {
 	color: orange;
 	font-style: italic;

@@ -9,6 +9,8 @@ const App = () => {
 	const [newNote, setNewNote] = useState('')
 	const [showAll, setShowAll] = useState(true)
 	const [btnText, setBtnText] = useState('show important')
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
 	const [errorMessage, setErrorMessage] = useState(null)
 
 	useEffect(() => {
@@ -38,6 +40,19 @@ const App = () => {
 		showAll ? setBtnText('show all') : setBtnText('show important')
 	}
 
+	const handleUsernameChange = e => {
+		setUsername(e.target.value)
+	}
+
+	const handlePasswordChange = e => {
+		setPassword(e.target.value)
+	}
+
+	const handleSubmit = e => {
+		e.preventDefault()
+		console.log('login with', username, password)
+	}
+
 	const notesToShow = showAll ? notes : notes.filter(n => n.important)
 
 	const toggleImportant = id => {
@@ -64,7 +79,31 @@ const App = () => {
 		<div id='app'>
 			<h1>Notes</h1>
 			<Noti message={errorMessage} />
+
+			<form onSubmit={handleSubmit}>
+				<div>
+					username
+					<input
+						type='text'
+						name='Username'
+						value={username}
+						onChange={handleUsernameChange}
+					/>
+				</div>
+				<div>
+					password
+					<input
+						type='password'
+						name='Password'
+						value={password}
+						onChange={handlePasswordChange}
+					/>
+				</div>
+				<button type='submit'>login</button>
+			</form>
+
 			<button onClick={handleImportance}>{btnText}</button>
+
 			<ul>
 				{notesToShow.map(note => (
 					<Note
