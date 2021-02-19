@@ -61,9 +61,10 @@ const App = () => {
 	}
 
 	return (
-		<div>
+		<div id='app'>
 			<h1>Notes</h1>
 			<Noti message={errorMessage} />
+			<button onClick={handleImportance}>{btnText}</button>
 			<ul>
 				{notesToShow.map(note => (
 					<Note
@@ -73,7 +74,7 @@ const App = () => {
 					/>
 				))}
 			</ul>
-			<button onClick={handleImportance}>{btnText}</button>
+
 			<form onSubmit={addNote}>
 				<input value={newNote} onChange={handleNoteChange} />
 				<button type='submit'>save</button>
