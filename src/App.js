@@ -40,12 +40,12 @@ const App = () => {
 		showAll ? setBtnText('show all') : setBtnText('show important')
 	}
 
-	const handleUsernameChange = e => {
-		setUsername(e.target.value)
+	const handleUsernameChange = ({ target }) => {
+		setUsername(target.value)
 	}
 
-	const handlePasswordChange = e => {
-		setPassword(e.target.value)
+	const handlePasswordChange = ({ target }) => {
+		setPassword(target.value)
 	}
 
 	const handleSubmit = e => {
