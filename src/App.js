@@ -115,7 +115,13 @@ const App = () => {
 			<h1>Notes</h1>
 			<Noti message={errorMessage} />
 
-			{user === null ? loginForm() : noteForm()}
+			{user === null ? (
+				loginForm()
+			) : (
+				<div>
+					<p>{user.name} logged-in</p> {noteForm()}
+				</div>
+			)}
 
 			<button onClick={handleImportance}>{btnText}</button>
 
