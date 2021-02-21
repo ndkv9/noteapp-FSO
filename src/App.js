@@ -19,18 +19,18 @@ const App = () => {
 		noteService.getAll().then(initialNotes => setNotes(initialNotes))
 	}, [])
 
-	const addNote = e => {
+	const addNote = async e => {
 		e.preventDefault()
 		const noteObj = {
 			content: newNote,
 			date: new Date().toISOString(),
 			important: Math.random() < 0.5,
+			id: notes.length + 1,
 		}
 
-		noteService.create(noteObj).then(returnedNote => {
-			setNotes(notes.concat(returnedNote))
-			setNewNote('')
-		})
+		const returnedNote = await noteService.create(noteObj)
+		setNotes(notes.concat(returnedNote))
+		setNewNote('')
 	}
 
 	const handleNoteChange = e => {
@@ -77,6 +77,7 @@ const App = () => {
 		e.preventDefault()
 		try {
 			const user = await loginService.login({ username, password })
+			noteService.setToken(user.token)
 			setUser(user)
 			setUsername('')
 			setPassword('')
@@ -126,9 +127,9 @@ const App = () => {
 			<button onClick={handleImportance}>{btnText}</button>
 
 			<ul>
-				{notesToShow.map(note => (
+				{notesToShow.map((note, i) => (
 					<Note
-						key={note.id}
+						key={i}
 						note={note}
 						toggleImportant={() => toggleImportant(note.id)}
 					/>
