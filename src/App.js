@@ -94,33 +94,36 @@ const App = () => {
 			})
 	}
 
+	const loginForm = () => {
+		return (
+			<Togglable buttonLabel='login'>
+				<LoginForm
+					username={username}
+					password={password}
+					handleUsernameChange={({ target }) => setUsername(target.value)}
+					handlePasswordChange={({ target }) => setPassword(target.value)}
+					handleSubmit={handleLogin}
+				/>
+			</Togglable>
+		)
+	}
+
+	const noteForm = () => (
+		<Togglable buttonLabel='new note'>
+			<NoteForm
+				onSubmit={addNote}
+				value={newNote}
+				handleChange={handleNoteChange}
+			/>
+		</Togglable>
+	)
+
 	return (
 		<div id='app'>
 			<h1>Notes</h1>
 			<Noti message={errorMessage} />
 
-			{user === null ? (
-				<Togglable buttonLabel='login'>
-					<LoginForm
-						username={username}
-						password={password}
-						handleUsernameChange={({ target }) => setUsername(target.value)}
-						handlePasswordChange={({ target }) => setPassword(target.value)}
-						handleSubmit={handleLogin}
-					/>
-				</Togglable>
-			) : (
-				<div>
-					<p>{user.name} logged-in</p>{' '}
-					<Togglable buttonLabel='new note'>
-						<NoteForm
-							onSubmit={addNote}
-							value={newNote}
-							handleChange={handleNoteChange}
-						/>
-					</Togglable>
-				</div>
-			)}
+			{user === null ? loginForm() : noteForm()}
 
 			<button onClick={handleImportance}>{btnText}</button>
 
