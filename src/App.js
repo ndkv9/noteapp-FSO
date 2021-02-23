@@ -4,6 +4,9 @@ import Noti from './components/Noti'
 import Footer from './components/Footer'
 import noteService from './services/notes'
 import loginService from './services/login'
+import Togglable from './components/Togglable'
+import NoteForm from './components/NoteForm'
+import LoginForm from './components/LoginForm'
 
 const App = () => {
 	const [notes, setNotes] = useState([])
@@ -52,37 +55,6 @@ const App = () => {
 		showAll ? setBtnText('show all') : setBtnText('show important')
 	}
 
-	const loginForm = () => (
-		<form onSubmit={handleLogin}>
-			<div>
-				username
-				<input
-					type='text'
-					value={username}
-					name='Username'
-					onChange={({ target }) => setUsername(target.value)}
-				/>
-			</div>
-			<div>
-				password
-				<input
-					type='password'
-					value={password}
-					name='Password'
-					onChange={({ target }) => setPassword(target.value)}
-				/>
-			</div>
-			<button type='submit'>login</button>
-		</form>
-	)
-
-	const noteForm = () => (
-		<form onSubmit={addNote}>
-			<input value={newNote} onChange={handleNoteChange} />
-			<button type='submit'>save</button>
-		</form>
-	)
-
 	const handleLogin = async e => {
 		e.preventDefault()
 		try {
@@ -128,10 +100,25 @@ const App = () => {
 			<Noti message={errorMessage} />
 
 			{user === null ? (
-				loginForm()
+				<Togglable buttonLabel='login'>
+					<LoginForm
+						username={username}
+						password={password}
+						handleUsernameChange={({ target }) => setUsername(target.value)}
+						handlePasswordChange={({ target }) => setPassword(target.value)}
+						handleSubmit={handleLogin}
+					/>
+				</Togglable>
 			) : (
 				<div>
-					<p>{user.name} logged-in</p> {noteForm()}
+					<p>{user.name} logged-in</p>{' '}
+					<Togglable buttonLabel='new note'>
+						<NoteForm
+							onSubmit={addNote}
+							value={newNote}
+							handleChange={handleNoteChange}
+						/>
+					</Togglable>
 				</div>
 			)}
 
