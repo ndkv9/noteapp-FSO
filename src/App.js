@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Note from './components/Note'
 import Noti from './components/Noti'
 import Footer from './components/Footer'
@@ -89,14 +89,17 @@ const App = () => {
 		)
 	}
 
+	const noteFormRef = useRef()
+
 	const addNote = noteObject => {
+		noteFormRef.current.toggleVisibility()
 		noteService.create(noteObject).then(returnedNote => {
 			setNotes(notes.concat(returnedNote))
 		})
 	}
 
 	const noteForm = () => (
-		<Togglable buttonLabel='new note'>
+		<Togglable buttonLabel='new note' ref={noteFormRef}>
 			<NoteForm createNote={addNote} />
 		</Togglable>
 	)
