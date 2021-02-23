@@ -1,4 +1,10 @@
-const LoginForm = () => {
+const LoginForm = ({
+	handleSubmit,
+	handleUsernameChange,
+	handlePasswordChange,
+	username,
+	password,
+}) => {
 	return (
 		<div>
 			<h2>Login</h2>
