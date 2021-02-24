@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 module.exports = {
 	env: {
 		browser: true,
@@ -15,8 +14,8 @@ module.exports = {
 	},
 	plugins: ['react', 'jest'],
 	rules: {
-		'no-undef': ['error'],
-		'no-unused-vars': 'error',
+		'no-undef': 0,
+		'no-unused-vars': 0,
 		indent: ['error', 'tab'],
 		'linebreak-style': ['error', 'windows'],
 		quotes: ['error', 'single'],
