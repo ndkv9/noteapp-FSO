@@ -17,7 +17,7 @@ module.exports = {
 		'no-undef': 0,
 		'no-unused-vars': 0,
 		indent: ['error', 'tab'],
-		'linebreak-style': ['error', 'windows'],
+		'linebreak-style': 0,
 		quotes: ['error', 'single'],
 		semi: ['error', 'never'],
 		eqeqeq: 'error',
