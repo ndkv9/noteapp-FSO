@@ -28,6 +28,15 @@ describe('Note app', function () {
 		cy.contains('Create a new note')
 	})
 
+	it('login fails with wrong password', function () {
+		cy.contains('login').click()
+		cy.get('#username').type('namek1')
+		cy.get('#password').type('password2')
+		cy.get('#login-btn').click()
+
+		cy.get('.error').contains('Wrong credentials')
+	})
+
 	describe('when logged in', function () {
 		beforeEach(function () {
 			cy.contains('login').click()
@@ -43,10 +52,16 @@ describe('Note app', function () {
 			cy.contains('co that la the khong?')
 		})
 
-		it('the important filed can change', function () {
-			cy.get('#new-note').type('co that la the khong?')
-			cy.get('#create-btn').click()
-			cy.get('#important-btn').click()
+		describe('and a note exists', function () {
+			beforeEach(function () {
+				cy.get('#new-note').type('co that la the khong?')
+				cy.get('#create-btn').click()
+			})
+
+			it('it can be made important', function () {
+				cy.contains('co that la the khong?').contains('make important').click()
+				cy.contains('make important')
+			})
 		})
 	})
 })
