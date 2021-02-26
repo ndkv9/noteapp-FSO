@@ -1,5 +1,12 @@
 describe('Note app', function () {
 	beforeEach(function () {
+		cy.request('POST', 'http://localhost:8080/api/testing/reset')
+		const user = {
+			name: 'piccolo thefirst',
+			username: 'namek1',
+			password: 'password1',
+		}
+		cy.request('POST', 'http://localhost:8080/api/users', user)
 		cy.visit('http://localhost:3000')
 	})
 
@@ -14,7 +21,7 @@ describe('Note app', function () {
 
 	it('user can login', function () {
 		cy.contains('login').click()
-		cy.get('#username').type('saiyan1')
+		cy.get('#username').type('namek1')
 		cy.get('#password').type('password1')
 		cy.get('#login-btn').click()
 
@@ -24,17 +31,22 @@ describe('Note app', function () {
 	describe('when logged in', function () {
 		beforeEach(function () {
 			cy.contains('login').click()
-			cy.get('#username').type('saiyan1')
+			cy.get('#username').type('namek1')
 			cy.get('#password').type('password1')
 			cy.get('#login-btn').click()
 		})
 
 		it('a new note can be created', function () {
-			cy.contains('new note').click()
 			cy.get('#new-note').type('co that la the khong?')
 			cy.get('#create-btn').click()
 
 			cy.contains('co that la the khong?')
+		})
+
+		it('the important filed can change', function () {
+			cy.get('#new-note').type('co that la the khong?')
+			cy.get('#create-btn').click()
+			cy.get('#important-btn').click()
 		})
 	})
 })

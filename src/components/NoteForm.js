@@ -11,7 +11,7 @@ const NoteForm = ({ createNote }) => {
 		e.preventDefault()
 		const noteObj = {
 			content: newNote,
-			important: Math.random() < 0.5,
+			important: false,
 		}
 
 		createNote(noteObj)
