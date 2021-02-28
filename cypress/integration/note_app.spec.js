@@ -34,15 +34,13 @@ describe('Note app', function () {
 		cy.get('#password').type('password2')
 		cy.get('#login-btn').click()
 
-		cy.get('.error').contains('Wrong credentials')
+		cy.get('.error').should('contain', 'Wrong credentials')
+		cy.get('html').should('not.contain', 'piccolo logged in')
 	})
 
 	describe('when logged in', function () {
 		beforeEach(function () {
-			cy.contains('login').click()
-			cy.get('#username').type('namek1')
-			cy.get('#password').type('password1')
-			cy.get('#login-btn').click()
+			cy.login({ username: 'namek1', password: 'password1' })
 		})
 
 		it('a new note can be created', function () {
